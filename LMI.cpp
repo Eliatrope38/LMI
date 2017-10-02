@@ -1,19 +1,27 @@
+
+/***************************************************
+  This is a library for the First Sensor LMI Pressure sensor
+  Designed specifically to work with the LMI
+  ---->https://www.first-sensor.com/en/products/pressure-sensors/pressure-sensors-and-transmitters/amplified-pressure-sensors/lmi/index.html
+***************************************************/
+
 #include "LMI.h"
 
 LMI::LMI(){
-
-  if (TWCR == 0) // do this check so that Wire only gets initialized once
+  // Check if Wire already initialized
+  if (TWCR == 0)
   {
      Wire.begin();
   }
-
 }
 
 void LMI::begin(int Address){
   address = Address;
+  // read electonics information from sensor
   GetSignature();
 }
 
+// read electonics information from sensor
 void LMI::GetSignature(){
   char raw_data[54];
   int count = 0;
@@ -21,7 +29,7 @@ void LMI::GetSignature(){
     return;
   }
   Wire.beginTransmission(address);
-  Wire.write(0x23);
+  Wire.write(SIGNATURE_REGISTER);
   byte error = Wire.endTransmission();
 
   Wire.beginTransmission(address);
@@ -53,13 +61,14 @@ void LMI::GetSignature(){
   scale_factor = raw_data[count++] <<8 | raw_data[count++];
 }
 
+// read pressure count from LMI
 int16_t LMI::GetPressureCount(){
   int i = 0;
   if (address == 0x00){
     return;
   }
   Wire.beginTransmission(address);
-  Wire.write(0x20);
+  Wire.write(PRESSURE_REGISTER);
   byte error = Wire.endTransmission();
 
   Wire.beginTransmission(address);
@@ -68,10 +77,12 @@ int16_t LMI::GetPressureCount(){
   return Wire.read() << 8 | i;
 }
 
+// get Pressure value in Pascal based on count / scale factor
 float LMI::GetPressure(){
   return (float)GetPressureCount() / (float) scale_factor;
 }
 
+// return output type U : Unidirectionnal - B : Bidirectionnal
 char LMI::GetOutputType(){
   return OutputType;
 }
