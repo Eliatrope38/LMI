@@ -11,6 +11,9 @@
 #include "Arduino.h"
 #include <Wire.h>
 
+#define PRESSURE_REGISTER 0x20
+#define SIGNATURE_REGISTER 0x23
+
 class LMI{
   private:
     int address = 0x00; // Set at 0x00 to be sure about init
