@@ -20,6 +20,7 @@ class LMI{
     String FW_Version;
     String PartNumber;
     String LotNumber;
+    String SerialNumber;
     int PressureRange;
     char OutputType; // U or B
     unsigned int scale_factor; // used to convert read pressure count to Pa Pressure Value
@@ -35,6 +36,7 @@ class LMI{
     String GetFWVersion();
     String GetPartNumber();
     String GetLotNumber();
+    String GetSerialNumber();
     unsigned int GetScaleFactor(); // factor used to go to Pa Value
     int GetPressureRange();
     char GetOutputType();

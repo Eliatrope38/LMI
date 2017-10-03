@@ -59,6 +59,12 @@ void LMI::GetSignature(){
   PressureRange =raw_data[count++] <<8 | raw_data[count++];
   OutputType = raw_data[count++];
   scale_factor = raw_data[count++] <<8 | raw_data[count++];
+  SerialNumber = String(raw_data[count++]);
+  SerialNumber += String(raw_data[count++]);
+  SerialNumber += String(raw_data[count++],DEC);
+  SerialNumber += String(raw_data[count++],DEC);
+  SerialNumber += String(raw_data[count++],DEC);
+  SerialNumber += String(raw_data[count++],DEC);
 }
 
 // read pressure count from LMI
@@ -105,4 +111,8 @@ unsigned int LMI::GetScaleFactor(){
 
 int LMI::GetPressureRange(){
   return PressureRange;
+}
+
+String LMI::GetSerialNumber(){
+  return SerialNumber;
 }
