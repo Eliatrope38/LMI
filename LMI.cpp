@@ -23,7 +23,7 @@ void LMI::begin(int Address){
 
 // read electonics information from sensor
 void LMI::GetSignature(){
-  char raw_data[54];
+  byte raw_data[54];
   int count = 0;
   if (address == 0x00){
     return;
@@ -50,17 +50,17 @@ void LMI::GetSignature(){
   FW_Version += String(raw_data[count++],DEC);
   PartNumber = "";
   while (count < 13){
-    PartNumber += String(raw_data[count++]);
+    PartNumber += (char)raw_data[count++];
   }
   LotNumber = "";
   while (count < 20){
-    LotNumber += String(raw_data[count++]);
+    LotNumber += (char)raw_data[count++];
   }
   PressureRange =raw_data[count++] <<8 | raw_data[count++];
-  OutputType = raw_data[count++];
+  OutputType = (char)raw_data[count++];
   scale_factor = raw_data[count++] <<8 | raw_data[count++];
-  SerialNumber = String(raw_data[count++]);
-  SerialNumber += String(raw_data[count++]);
+  SerialNumber = (char)raw_data[count++];
+  SerialNumber += (char)raw_data[count++];
   SerialNumber += String(raw_data[count++],DEC);
   SerialNumber += String(raw_data[count++],DEC);
   SerialNumber += String(raw_data[count++],DEC);

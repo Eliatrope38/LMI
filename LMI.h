@@ -21,7 +21,7 @@ class LMI{
     String PartNumber;
     String LotNumber;
     String SerialNumber;
-    int PressureRange;
+    unsigned int PressureRange;
     char OutputType; // U or B
     unsigned int scale_factor; // used to convert read pressure count to Pa Pressure Value
     int OutputCount; // Pressure count from LMI
